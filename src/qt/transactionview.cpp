@@ -34,6 +34,8 @@
 #include <QUrl>
 #include <QVBoxLayout>
 
+// CTSC: TODO: Styling tweaks for messy grid lines on Mac, commented out existing Q_OS_MAC customizations to test, but did not help...
+
 TransactionView::TransactionView(QWidget* parent) : QWidget(parent), model(0), transactionProxyModel(0),
                                                     transactionView(0)
 {

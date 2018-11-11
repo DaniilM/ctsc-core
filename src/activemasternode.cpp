@@ -1,6 +1,7 @@
 // Copyright (c) 2014-2016 The Dash developers
 // Copyright (c) 2015-2017 The PIVX developers
 // Copyright (c) 2017-2018 The Northern developers
+// Copyright (c) 2018 The CTSC developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -17,7 +18,7 @@
 CActiveMasternode activeMasternode;
 
 //
-// Bootup the Masternode, look for a NORT collateral input and register on the network
+// Bootup the Masternode, look for a CTSC collateral input and register on the network
 //
 void CActiveMasternode::ManageStatus()
 {
@@ -73,13 +74,13 @@ void CActiveMasternode::ManageStatus()
         }
 
         // if (Params().NetworkID() == CBaseChainParams::MAIN) {
-        //     if (service.GetPort() != 6942) {
-        //         notCapableReason = strprintf("Invalid port: %u - only 6942 is supported on mainnet.", service.GetPort());
+        //     if (service.GetPort() != 51527) {
+        //         notCapableReason = strprintf("Invalid port: %u - only 51527 is supported on mainnet.", service.GetPort());
         //         LogPrintf("CActiveMasternode::ManageStatus() - not capable: %s\n", notCapableReason);
         //         return;
         //     }
-        // } else if (service.GetPort() == 6942) {
-        //     notCapableReason = strprintf("Invalid port: %u - 6942 is only supported on mainnet.", service.GetPort());
+        // } else if (service.GetPort() == 51527) {
+        //     notCapableReason = strprintf("Invalid port: %u - 51527 is only supported on mainnet.", service.GetPort());
         //     LogPrintf("CActiveMasternode::ManageStatus() - not capable: %s\n", notCapableReason);
         //     return;
         // }
@@ -240,13 +241,13 @@ bool CActiveMasternode::Register(std::string strService, std::string strKeyMaste
 
     // CService service = CService(strService);
     // if (Params().NetworkID() == CBaseChainParams::MAIN) {
-    //     if (service.GetPort() != 6942) {
-    //         errorMessage = strprintf("Invalid port %u for masternode %s - only 6942 is supported on mainnet.", service.GetPort(), strService);
+    //     if (service.GetPort() != 51527) {
+    //         errorMessage = strprintf("Invalid port %u for masternode %s - only 51527 is supported on mainnet.", service.GetPort(), strService);
     //         LogPrintf("CActiveMasternode::Register() - %s\n", errorMessage);
     //         return false;
     //     }
-    // } else if (service.GetPort() == 6942) {
-    //     errorMessage = strprintf("Invalid port %u for masternode %s - 6942 is only supported on mainnet.", service.GetPort(), strService);
+    // } else if (service.GetPort() == 51527) {
+    //     errorMessage = strprintf("Invalid port %u for masternode %s - 51527 is only supported on mainnet.", service.GetPort(), strService);
     //     LogPrintf("CActiveMasternode::Register() - %s\n", errorMessage);
     //     return false;
     // }

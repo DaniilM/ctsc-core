@@ -14,7 +14,7 @@
 #include "timedata.h"
 #include "util.h"
 
-#define MASTERNODE_MIN_CONFIRMATIONS 15
+#define MASTERNODE_MIN_CONFIRMATIONS 15 // CTSC: 15 confirmations for collateral
 #define MASTERNODE_MIN_MNP_SECONDS (10 * 60)
 #define MASTERNODE_MIN_MNB_SECONDS (5 * 60)
 #define MASTERNODE_PING_SECONDS (5 * 60)
@@ -22,7 +22,8 @@
 #define MASTERNODE_REMOVAL_SECONDS (130 * 60)
 #define MASTERNODE_CHECK_SECONDS 5
 
-#define MASTERNODE_COLLATERAL 2500
+// CTSC: config mn collateral
+#define MASTERNODE_COLLATERAL 25000
 
 using namespace std;
 
@@ -102,7 +103,7 @@ public:
 };
 
 //
-// The Masternode Class. It contains the input of the NORT collateral, signature to prove
+// The Masternode Class. It contains the input of the CTSC collateral, signature to prove
 // it's the one who own that ip address and code for calculating the payment election.
 //
 class CMasternode

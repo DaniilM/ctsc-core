@@ -33,7 +33,7 @@ class TxViewDelegate : public QAbstractItemDelegate
 {
     Q_OBJECT
 public:
-    TxViewDelegate() : QAbstractItemDelegate(), unit(BitcoinUnits::NORT)
+    TxViewDelegate() : QAbstractItemDelegate(), unit(BitcoinUnits::CTSC)
     {
     }
 
@@ -132,7 +132,7 @@ OverviewPage::OverviewPage(QWidget* parent) : QWidget(parent),
     nDisplayUnit = 0; // just make sure it's not unitialized
     ui->setupUi(this);
 
-    // Recent transactions
+    // Recent Transactions
     ui->listTransactions->setItemDelegate(txdelegate);
     ui->listTransactions->setIconSize(QSize(DECORATION_SIZE, DECORATION_SIZE));
     ui->listTransactions->setMinimumHeight(NUM_ITEMS * (DECORATION_SIZE + 2));
@@ -169,7 +169,7 @@ void OverviewPage::setBalance(const CAmount& balance, const CAmount& unconfirmed
     currentWatchUnconfBalance = watchUnconfBalance;
     currentWatchImmatureBalance = watchImmatureBalance;
 
-    // NORT labels
+    // CTSC labels
     ui->labelBalance->setText(BitcoinUnits::floorHtmlWithUnit(nDisplayUnit, balance - immatureBalance, false, BitcoinUnits::separatorNever));
     ui->labelUnconfirmed->setText(BitcoinUnits::floorHtmlWithUnit(nDisplayUnit, unconfirmedBalance, false, BitcoinUnits::separatorNever));
     ui->labelImmature->setText(BitcoinUnits::floorHtmlWithUnit(nDisplayUnit, immatureBalance, false, BitcoinUnits::separatorNever));
@@ -256,7 +256,7 @@ void OverviewPage::setWalletModel(WalletModel* model)
         connect(model, SIGNAL(notifyWatchonlyChanged(bool)), this, SLOT(updateWatchOnlyLabels(bool)));
     }
 
-    // update the display unit, to not use the default ("NORT")
+    // update the display unit, to not use the default ("CTSC")
     updateDisplayUnit();
 }
 

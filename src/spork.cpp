@@ -27,7 +27,7 @@ CSporkManager sporkManager;
 std::map<uint256, CSporkMessage> mapSporks;
 std::map<int, CSporkMessage> mapSporksActive;
 
-// NORT: on startup load spork values from previous session if they exist in the sporkDB
+// CTSC: on startup load spork values from previous session if they exist in the sporkDB
 void LoadSporksFromDB()
 {
     for (int i = SPORK_START; i <= SPORK_END; ++i) {
@@ -86,6 +86,15 @@ void ProcessSpork(CNode* pfrom, std::string& strCommand, CDataStream& vRecv)
 
         LogPrintf("spork - new %s ID %d Time %d bestHeight %d\n", hash.ToString(), spork.nSporkID, spork.nValue, chainActive.Tip()->nHeight);
 
+        // CTSC: Enforce own spork key
+        if (spork.nTimeSigned >= Params().NewSporkStart()) {
+            if (!sporkManager.CheckSignature(spork, true)) {
+                LogPrintf("%s : Invalid Signature\n", __func__);
+                Misbehaving(pfrom->GetId(), 100);
+                return;
+            }
+        }
+
         if (!sporkManager.CheckSignature(spork)) {
             LogPrintf("spork - invalid signature\n");
             Misbehaving(pfrom->GetId(), 100);
@@ -96,7 +105,7 @@ void ProcessSpork(CNode* pfrom, std::string& strCommand, CDataStream& vRecv)
         mapSporksActive[spork.nSporkID] = spork;
         sporkManager.Relay(spork);
 
-        // NORT: add to spork database.
+        // CTSC: add to spork database.
         pSporkDB->WriteSpork(spork.nSporkID, spork);
     }
     if (strCommand == "getsporks") {
@@ -177,13 +186,27 @@ void ReprocessBlocks(int nBlocks)
     }
 }
 
-bool CSporkManager::CheckSignature(CSporkMessage& spork)
+bool CSporkManager::CheckSignature(CSporkMessage& spork,bool fCheckSigner)
 {
-    //note: need to investigate why this is failing
+    // OLD: note: need to investigate why this is failing
     std::string strMessage = boost::lexical_cast<std::string>(spork.nSporkID) + boost::lexical_cast<std::string>(spork.nValue) + boost::lexical_cast<std::string>(spork.nTimeSigned);
     CPubKey pubkeynew(ParseHex(Params().SporkKey()));
     std::string errorMessage = "";
-    if (masternodeSigner.VerifyMessage(pubkeynew, spork.vchSig, strMessage, errorMessage)) {
+
+    // CTSC: Enforce own spork key
+    if (fCheckSigner && !masternodeSigner.VerifyMessage(pubkeynew, spork.vchSig,strMessage, errorMessage))
+        return false;
+
+    // CTSC: TODO: Consider removing this old spork support code, not needed since it's checking current date, NOT a spork date!?!
+    if (GetAdjustedTime() < Params().RejectOldSporkKey()) {
+        LogPrintf("CTSC: Checking old spork key\n");
+        CPubKey pubkeyold(ParseHex(Params().SporkKeyOld()));
+        if (masternodeSigner.VerifyMessage(pubkeynew, spork.vchSig, strMessage, errorMessage) ||
+            masternodeSigner.VerifyMessage(pubkeyold, spork.vchSig, strMessage, errorMessage)) {
+            return true;
+        }
+    }
+    else if (masternodeSigner.VerifyMessage(pubkeynew, spork.vchSig, strMessage, errorMessage)) {
         return true;
     }
 
@@ -248,7 +271,7 @@ bool CSporkManager::SetPrivKey(std::string strPrivKey)
 
     Sign(msg);
 
-    if (CheckSignature(msg)) {
+    if (CheckSignature(msg, true)) {
         LogPrintf("CSporkManager::SetPrivKey - Successfully initialized as spork signer\n");
         return true;
     } else {

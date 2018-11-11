@@ -22,10 +22,20 @@
 			<integer>370</integer>
 			<integer>156</integer>
 		</array>
-		<key>Northern-Qt.app</key>
+		<key>CTSC-Qt.app</key>
 		<array>
 			<integer>128</integer>
 			<integer>156</integer>
+		</array>
+		<key>.background</key>
+		<array>
+			<integer>1000</integer>
+			<integer>3000</integer>
+		</array>
+		<key>.fseventsd</key>
+		<array>
+			<integer>1400</integer>
+			<integer>3000</integer>
 		</array>
 	</dict>
 </dict>

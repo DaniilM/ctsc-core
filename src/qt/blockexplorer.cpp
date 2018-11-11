@@ -44,7 +44,7 @@ static std::string ValueToString(CAmount nValue, bool AllowNegative = false)
     if (nValue < 0 && !AllowNegative)
         return "<span>" + _("unknown") + "</span>";
 
-    QString Str = BitcoinUnits::formatWithUnit(BitcoinUnits::NORT, nValue);
+    QString Str = BitcoinUnits::formatWithUnit(BitcoinUnits::CTSC, nValue);
     if (AllowNegative && nValue > 0)
         Str = '+' + Str;
     return std::string("<span>") + Str.toUtf8().data() + "</span>";
@@ -176,7 +176,7 @@ const CBlockIndex* getexplorerBlockIndex(int64_t height)
 
 std::string getexplorerBlockHash(int64_t Height)
 {
-    std::string genesisblockhash = "0000041e482b9b9691d98eefb48473405c0b8ec31b76df3797c74a78680ef818";
+    std::string genesisblockhash = "000002eca58054b88dfcf602fc6266437f256fdca3b66d1bb5b0f5ce8d2ee815";
     CBlockIndex* pindexBest = mapBlockIndex[chainActive.Tip()->GetBlockHash()];
     if ((Height < 0) || (Height > pindexBest->nHeight)) {
         return genesisblockhash;
@@ -248,16 +248,17 @@ std::string BlockToString(CBlockIndex* pBlock)
 
     std::string BlockContent = makeHTMLTable(BlockContentCells, sizeof(BlockContentCells) / (2 * sizeof(std::string)), 2);
 
+    // CTSC: Fix arrow sizing here...
     std::string Content;
     Content += "<h2><a class=\"nav\" href=";
     Content += itostr(pBlock->nHeight - 1);
-    Content += ">◄&nbsp;</a>";
+    Content += ">&#9664;&nbsp;</a>";
     Content += _("Block");
     Content += " ";
     Content += itostr(pBlock->nHeight);
     Content += "<a class=\"nav\" href=";
     Content += itostr(pBlock->nHeight + 1);
-    Content += ">&nbsp;►</a></h2>";
+    Content += ">&nbsp;&#9654;</a></h2>";
     Content += BlockContent;
     Content += "</br>";
     /*
@@ -473,8 +474,8 @@ void BlockExplorer::showEvent(QShowEvent*)
         updateNavButtons();
 
         if (!GetBoolArg("-txindex", false)) {
-            QString Warning = tr("Not all transactions will be shown. To view all transactions you need to set txindex=1 in the configuration file (northern.conf).");
-            QMessageBox::warning(this, "Northern Core Blockchain Explorer", Warning, QMessageBox::Ok);
+            QString Warning = tr("Not all transactions will be shown. To view all transactions you need to set txindex=1 in the configuration file (ctsc.conf).");
+            QMessageBox::warning(this, "CTSC Core Blockchain Explorer", Warning, QMessageBox::Ok);
         }
     }
 }
@@ -550,7 +551,9 @@ void BlockExplorer::setBlock(CBlockIndex* pBlock)
 
 void BlockExplorer::setContent(const std::string& Content)
 {
-    QString CSS = "body {font-size:12px; color:#f8f6f6; bgcolor:#fafafa;}\n a, span { font-family: monospace; }\n span.addr {color:#fafafa; font-weight: bold;}\n table tr td {padding: 3px; border: 1px solid black; background-color: #fafafa;}\n td.d0 {font-weight: bold; color:#f8f6f6;}\n h2, h3 { white-space:nowrap; color:#fafafa;}\n a { color:#88f6f6; text-decoration:none; }\n a.nav {color:#fafafa;}\n";
+    // CTSC: custom styling for block explorer
+    QString CSS = "body {font-size:12px; color:#333333; bgcolor:#2c48a5;}\n a, span { font-family: monospace; }\n span.addr {color:#333333; font-weight: bold;}\n table tr td {padding: 3px; border: 1px solid black; background-color: #fafafa;}\n td.d0 {font-weight: bold; color:#333333;}\n h2, h3 { white-space:nowrap; color:#333333;}\n a { color:#2c48a5; text-decoration:none; }\n a.nav {color:#2c48a5;}\n";
+    
     QString FullContent = "<html><head><style type=\"text/css\">" + CSS + "</style></head>" + "<body>" + Content.c_str() + "</body></html>";
     // printf(FullContent.toUtf8());
 

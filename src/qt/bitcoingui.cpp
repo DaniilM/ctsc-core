@@ -2,6 +2,7 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2017 The PIVX developers
 // Copyright (c) 2017-2018 The Northern developers
+// Copyright (c) 2018 The CTSC developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -117,7 +118,7 @@ BitcoinGUI::BitcoinGUI(const NetworkStyle* networkStyle, QWidget* parent) : QMai
 
     GUIUtil::restoreWindowGeometry("nWindow", QSize(850, 550), this);
 
-    QString windowTitle = tr("Northern Core") + " - ";
+    QString windowTitle = tr("CTSC Core") + " - ";
 #ifdef ENABLE_WALLET
     /* if compiled with wallet support, -disablewallet can still disable the wallet */
     enableWallet = !GetBoolArg("-disablewallet", false);
@@ -321,7 +322,7 @@ void BitcoinGUI::createActions(const NetworkStyle* networkStyle)
     sendIcon.addPixmap(sendIconActive,QIcon::Active,QIcon::Off);
 
     sendCoinsAction = new QAction(sendIcon, tr("&Send"), this);
-    sendCoinsAction->setStatusTip(tr("Send coins to a NORT address"));
+    sendCoinsAction->setStatusTip(tr("Send coins to a CTSC address"));
     sendCoinsAction->setToolTip(sendCoinsAction->statusTip());
     sendCoinsAction->setCheckable(true);
 #ifdef Q_OS_MAC
@@ -341,7 +342,7 @@ void BitcoinGUI::createActions(const NetworkStyle* networkStyle)
     receiveIcon.addPixmap(receiveIconActive,QIcon::Active,QIcon::Off);
 
     receiveCoinsAction = new QAction(receiveIcon, tr("&Receive"), this);
-    receiveCoinsAction->setStatusTip(tr("Request payments (generates QR codes and northern: URIs)"));
+    receiveCoinsAction->setStatusTip(tr("Request payments (generates QR codes and ctsc: URIs)"));
     receiveCoinsAction->setToolTip(receiveCoinsAction->statusTip());
     receiveCoinsAction->setCheckable(true);
 #ifdef Q_OS_MAC
@@ -414,8 +415,8 @@ void BitcoinGUI::createActions(const NetworkStyle* networkStyle)
     quitAction->setStatusTip(tr("Quit application"));
     quitAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
     quitAction->setMenuRole(QAction::QuitRole);
-    aboutAction = new QAction(networkStyle->getAppIcon(), tr("&About Northern Core"), this);
-    aboutAction->setStatusTip(tr("Show information about Northern Core"));
+    aboutAction = new QAction(networkStyle->getAppIcon(), tr("&About CTSC Core"), this);
+    aboutAction->setStatusTip(tr("Show information about CTSC Core"));
     aboutAction->setMenuRole(QAction::AboutRole);
 #if QT_VERSION < 0x050000
     aboutQtAction = new QAction(QIcon(":/trolltech/qmessagebox/images/qtlogo-64.png"), tr("About &Qt"), this);
@@ -425,7 +426,7 @@ void BitcoinGUI::createActions(const NetworkStyle* networkStyle)
     aboutQtAction->setStatusTip(tr("Show information about Qt"));
     aboutQtAction->setMenuRole(QAction::AboutQtRole);
     optionsAction = new QAction(QIcon(":/icons/options"), tr("&Options..."), this);
-    optionsAction->setStatusTip(tr("Modify configuration options for Northern"));
+    optionsAction->setStatusTip(tr("Modify configuration options for CTSC"));
     optionsAction->setMenuRole(QAction::PreferencesRole);
     toggleHideAction = new QAction(networkStyle->getAppIcon(), tr("&Show / Hide"), this);
     toggleHideAction->setStatusTip(tr("Show or hide the main Window"));
@@ -433,20 +434,20 @@ void BitcoinGUI::createActions(const NetworkStyle* networkStyle)
     encryptWalletAction = new QAction(QIcon(":/icons/lock_closed"), tr("&Encrypt Wallet..."), this);
     encryptWalletAction->setStatusTip(tr("Encrypt the private keys that belong to your wallet"));
     encryptWalletAction->setCheckable(true);
-    backupWalletAction = new QAction(QIcon(":/icons/filesave"), tr("&Backup Wallet..."), this);
+    backupWalletAction = new QAction(QIcon(":/icons/dark/filesave"), tr("&Backup Wallet..."), this);
     backupWalletAction->setStatusTip(tr("Backup wallet to another location"));
     changePassphraseAction = new QAction(QIcon(":/icons/key"), tr("&Change Passphrase..."), this);
     changePassphraseAction->setStatusTip(tr("Change the passphrase used for wallet encryption"));
     unlockWalletAction = new QAction(tr("&Unlock Wallet..."), this);
     unlockWalletAction->setToolTip(tr("Unlock wallet"));
     lockWalletAction = new QAction(tr("&Lock Wallet"), this);
-    signMessageAction = new QAction(QIcon(":/icons/edit"), tr("Sign &message..."), this);
-    signMessageAction->setStatusTip(tr("Sign messages with your NORT addresses to prove you own them"));
-    verifyMessageAction = new QAction(QIcon(":/icons/transaction_0"), tr("&Verify message..."), this);
-    verifyMessageAction->setStatusTip(tr("Verify messages to ensure they were signed with specified NORT addresses"));
+    signMessageAction = new QAction(QIcon(":/icons/dark/edit"), tr("Sign &message..."), this);
+    signMessageAction->setStatusTip(tr("Sign messages with your CTSC addresses to prove you own them"));
+    verifyMessageAction = new QAction(QIcon(":/icons/dark/verify"), tr("&Verify message..."), this);
+    verifyMessageAction->setStatusTip(tr("Verify messages to ensure they were signed with specified CTSC addresses"));
     bip38ToolAction = new QAction(QIcon(":/icons/key"), tr("&BIP38 tool"), this);
     bip38ToolAction->setToolTip(tr("Encrypt and decrypt private keys using a passphrase"));
-    multiSendAction = new QAction(QIcon(":/icons/edit"), tr("&MultiSend"), this);
+    multiSendAction = new QAction(QIcon(":/icons/dark/edit"), tr("&MultiSend"), this);
     multiSendAction->setToolTip(tr("MultiSend Settings"));
     multiSendAction->setCheckable(true);
 
@@ -460,33 +461,33 @@ void BitcoinGUI::createActions(const NetworkStyle* networkStyle)
     openPeersAction->setStatusTip(tr("Show peers info"));
     openRepairAction = new QAction(QIcon(":/icons/options"), tr("Wallet &Repair"), this);
     openRepairAction->setStatusTip(tr("Show wallet repair options"));
-    openConfEditorAction = new QAction(QIcon(":/icons/edit"), tr("Open Wallet &Configuration File"), this);
+    openConfEditorAction = new QAction(QIcon(":/icons/dark/edit"), tr("Open Wallet &Configuration File"), this);
     openConfEditorAction->setStatusTip(tr("Open configuration file"));
-    openMNConfEditorAction = new QAction(QIcon(":/icons/edit"), tr("Open &Masternode Configuration File"), this);
+    openMNConfEditorAction = new QAction(QIcon(":/icons/dark/edit"), tr("Open &Masternode Configuration File"), this);
     openMNConfEditorAction->setStatusTip(tr("Open Masternode configuration file"));
     showBackupsAction = new QAction(QIcon(":/icons/browse"), tr("Show Automatic &Backups"), this);
     showBackupsAction->setStatusTip(tr("Show automatically created wallet backups"));
 
-    usedSendingAddressesAction = new QAction(QIcon(":/icons/address-book"), tr("&Sending addresses..."), this);
+    usedSendingAddressesAction = new QAction(QIcon(":/icons/dark/address-book"), tr("&Sending addresses..."), this);
     usedSendingAddressesAction->setStatusTip(tr("Show the list of used sending addresses and labels"));
-    usedReceivingAddressesAction = new QAction(QIcon(":/icons/address-book"), tr("&Receiving addresses..."), this);
+    usedReceivingAddressesAction = new QAction(QIcon(":/icons/dark/address-book"), tr("&Receiving addresses..."), this);
     usedReceivingAddressesAction->setStatusTip(tr("Show the list of used receiving addresses and labels"));
 
-    multisigCreateAction = new QAction(QIcon(":/icons/address-book"), tr("&Multisignature creation..."), this);
+    multisigCreateAction = new QAction(QIcon(":/icons/dark/address-book"), tr("&Multisignature creation..."), this);
     multisigCreateAction->setStatusTip(tr("Create a new multisignature address and add it to this wallet"));
-    multisigSpendAction = new QAction(QIcon(":/icons/send"), tr("&Multisignature spending..."), this);
+    multisigSpendAction = new QAction(QIcon(":/icons/dark/send"), tr("&Multisignature spending..."), this);
     multisigSpendAction->setStatusTip(tr("Spend from a multisignature address"));
-    multisigSignAction = new QAction(QIcon(":/icons/editpaste"), tr("&Multisignature signing..."), this);
+    multisigSignAction = new QAction(QIcon(":/icons/dark/editpaste"), tr("&Multisignature signing..."), this);
     multisigSignAction->setStatusTip(tr("Sign with a multisignature address"));
 
     openAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_FileIcon), tr("Open &URI..."), this);
-    openAction->setStatusTip(tr("Open a northern: URI or payment request"));
-    openBlockExplorerAction = new QAction(QIcon(":/icons/explorer"), tr("&Blockchain explorer"), this);
+    openAction->setStatusTip(tr("Open a ctsc: URI or payment request"));
+    openBlockExplorerAction = new QAction(QIcon(":/icons/dark/explorer"), tr("&Blockchain Explorer"), this);
     openBlockExplorerAction->setStatusTip(tr("Block explorer window"));
 
     showHelpMessageAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation), tr("&Command-line options"), this);
     showHelpMessageAction->setMenuRole(QAction::NoRole);
-    showHelpMessageAction->setStatusTip(tr("Show the Northern Core help message to get a list with possible Northern command-line options"));
+    showHelpMessageAction->setStatusTip(tr("Show the CTSC Core help message to get a list with possible CTSC command-line options"));
 
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutClicked()));
@@ -700,7 +701,7 @@ void BitcoinGUI::createTrayIcon(const NetworkStyle* networkStyle)
 {
 #ifndef Q_OS_MAC
     trayIcon = new QSystemTrayIcon(this);
-    QString toolTip = tr("Northern Core client") + " " + networkStyle->getTitleAddText();
+    QString toolTip = tr("CTSC Core client") + " " + networkStyle->getTitleAddText();
     trayIcon->setToolTip(toolTip);
     trayIcon->setIcon(networkStyle->getAppIcon());
     trayIcon->show();
@@ -905,7 +906,7 @@ void BitcoinGUI::setNumConnections(int count)
     }
     QIcon connectionItem = QIcon(icon).pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE);
     labelConnectionsIcon->setIcon(connectionItem);
-    labelConnectionsIcon->setToolTip(tr("%n active connection(s) to Northern network", "", count));
+    labelConnectionsIcon->setToolTip(tr("%n active connection(s) to CTSC network", "", count));
 }
 
 void BitcoinGUI::setNumBlocks(int count)
@@ -1035,7 +1036,7 @@ void BitcoinGUI::setNumBlocks(int count)
 
 void BitcoinGUI::message(const QString& title, const QString& message, unsigned int style, bool* ret)
 {
-    QString strTitle = tr("Northern Core"); // default title
+    QString strTitle = tr("CTSC Core"); // default title
     // Default to information icon
     int nMBoxIcon = QMessageBox::Information;
     int nNotifyIcon = Notificator::Information;
@@ -1060,7 +1061,7 @@ void BitcoinGUI::message(const QString& title, const QString& message, unsigned 
             break;
         }
     }
-    // Append title to "Northern - "
+    // Append title to "CTSC - "
     if (!msgType.isEmpty())
         strTitle += " - " + msgType;
 

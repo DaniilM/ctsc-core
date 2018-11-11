@@ -9,8 +9,8 @@
 #include <vector>
 
 /**
- * CBaseChainParams defines the base parameters (shared between northern-cli and northernd)
- * of a given instance of the Northern system.
+ * CBaseChainParams defines the base parameters (shared between ctsc-cli and ctscd)
+ * of a given instance of the CTSC system.
  */
 class CBaseChainParams
 {

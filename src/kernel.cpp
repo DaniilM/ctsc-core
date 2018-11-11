@@ -20,7 +20,7 @@ bool fTestNet = false; //Params().NetworkID() == CBaseChainParams::TESTNET;
 // Modifier interval: time to elapse before new modifier is computed
 // Set to 3-hour for production network and 20-minute for test network
 unsigned int nModifierInterval;
-int nStakeTargetSpacing = 60; // Northern: 1 minute blocks during POS (block 201+)
+int nStakeTargetSpacing = 60; // CTSC: 1 minute blocks during POS (block 201+)
 unsigned int getIntervalVersion(bool fTestNet)
 {
     if (fTestNet)
@@ -274,7 +274,7 @@ bool GetKernelStakeModifier(uint256 hashBlockFrom, uint64_t& nStakeModifier, int
 
 uint256 stakeHash(unsigned int nTimeTx, CDataStream ss, unsigned int prevoutIndex, uint256 prevoutHash, unsigned int nTimeBlockFrom)
 {
-    // Northern will hash in the transaction hash and the index number in order to make sure each hash is unique
+    // CTSC will hash in the transaction hash and the index number in order to make sure each hash is unique
     ss << nTimeBlockFrom << prevoutIndex << prevoutHash << nTimeTx;
     return Hash(ss.begin(), ss.end());
 }
@@ -322,6 +322,7 @@ bool CheckStakeKernelHash(unsigned int nBits, const CBlock blockFrom, const CTra
     //if wallet is simply checking to make sure a hash is valid
     if (fCheck) {
         hashProofOfStake = stakeHash(nTimeTx, ss, prevout.n, prevout.hash, nTimeBlockFrom);
+        
         return stakeTargetHit(hashProofOfStake, nValueIn, bnTargetPerCoinDay);
     }
 
@@ -400,8 +401,10 @@ bool CheckProofOfStake(const CBlock block, uint256& hashProofOfStake)
 
     unsigned int nInterval = 0;
     unsigned int nTime = block.nTime;
-    if (!CheckStakeKernelHash(block.nBits, blockprev, txPrev, txin.prevout, nTime, nInterval, true, hashProofOfStake, fDebug))
-        return error("CheckProofOfStake() : INFO: check kernel failed on coinstake %s, hashProof=%s \n", tx.GetHash().ToString().c_str(), hashProofOfStake.ToString().c_str()); // may occur during initial download or if behind on block chain sync
+    if (!CheckStakeKernelHash(block.nBits, blockprev, txPrev, txin.prevout, nTime, nInterval, true, hashProofOfStake, fDebug)) {
+        // may occur during initial download or if behind on block chain sync
+        return error("CheckProofOfStake() : INFO: check kernel failed on coinstake %s, hashProof=%s \n", tx.GetHash().ToString().c_str(), hashProofOfStake.ToString().c_str());
+    }
 
     return true;
 }

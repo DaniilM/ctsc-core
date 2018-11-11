@@ -1,46 +1,46 @@
-# Northern Core integration/staging repository
+# CTSC Core
 
-Northern Core is a decentralized, peer-to-peer cryptocurrency with a primary focus on energy-efficiency and scalabilty. The Northern Network makes use of only Proof-of-Stake mining, in the form of masternodes and staking. This means that the Northern blockchain has a very low impact on the environment and ensures that scaling will be a smooth transition in future. 
+CTSC Core is a decentralized, peer-to-peer cryptocurrency with a primary focus on energy-efficiency and scalabilty. The CTSC Network makes use of only Proof-of-Stake mining, in the form of masternodes and staking. This means that the CTSC blockchain has a very low impact on the environment and ensures that scaling will be a smooth transition in the future. 
 
-Furthermore, as result of offering multiple ways for users to mint new NORT coins, the network is a lot less centralized than some Proof-of-Work coins that have their hashrates dominated by one or two mining pools.
+Furthermore, as result of offering multiple ways for users to mint new CTSC coins, the network is a lot less centralized than some Proof-of-Work coins that have their hashrates dominated by one or two mining pools.
 
-### View the Northern whitepaper here: 
+### View the CTSC whitepaper here: Coming Soon...
 
-#### https://cdn.discordapp.com/attachments/416697792048922636/461555510496329728/Northern-Whitepaper-v1.0.0.pdf
+#
+## Coin Specs 
+#
 
-## Coin Specs
+
+#### Block Time: - *1 minute* 
+#### Maximum Supply: - *85,000,000 (85 million) CTSC*
+#### Consensus Mechanism: - *Proof-of-Stake (75% masternodes, 25% stakers - masternode increases over time)*
+#### Algorithm: - *Quark* 
+#### Masternode collateral - *25,000 CTSC* 
+#### Features: - *SwiftTX, multisig, multisend, and masternode governance is enabled* 
+#### RPC Port: - *51526* 
+#### P2P Port: - *51527* 
 
 #
 
-#### Block times: - *1 minute* 
-#### Maximum supply: - *5,000,000 (5 million) NORT*
-#### Consensus mechanism: - *Proof-of-Stake (85% masternodes, 15% stakers)*
-#### Algorithm: - *Quark-hash* 
-#### Masternode collateral - *2,500 NORT*  
-#### Features: - *SwiftTX, budget, treausury and masternode governance is enabled* 
-#### RPC Port: - *9332* 
-#### P2P Port: - *6942* 
+### Block reward breakdown (Block height - Reward per block - MN/Stake)
+#
+
+#### Block 501-10,000	  -   *1 CTSC*  (.75/.25)
+
+#### Block 10,001-25,000   -   *50 CTSC*    (37.5/12.5)
+
+#### Block 25,000-250,000  -   *40 CTSC*    (32/8)
+
+#### Block 250,001-500,000  -   *50 CTSC*   (42.5/7.5)
+
+#### Block 500,001-1,000,000  -  *60 CTSC*  (54/6)
+
+#### Block 1,000,001+   -   *10 CTSC*    (8/2)
+
+#### *Tapering inflation reward, with a cumulative supply capped at 85,000,000 CTSC.*
 
 #
 
-### Block reward breakdown (Block height - Reward per block)
-#
-#### Block 201-30,000	  -   *5.000 NORT*
-
-#### Block 30,001-200,000   -   *3.750 NORT*
-
-#### Block 200,001-500,000  -   *2.500 NORT*
-
-#### Block 500,001-900,000  -   *1.250 NORT*
-
-#### Block 900,001-1,500,000  -  *0.500 NORT*
-
-#### Block 1,500,001-6,000,000   -   *0.250 NORT*
-
-#### *11 year tapering inflation reward, with a cumulative supply capped at 5,000,000 NORT.*
-
-#
-
-### More information at [https://nort.network](https://nort.network)
-### Join our [Discord!](https://discord.gg/9nzt37V)
+### More information at [https://ctscoin.net](https://ctscoin.net)
+### Join our [Discord!](https://discord.gg/vB9KgNc)
 

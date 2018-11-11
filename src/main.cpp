@@ -3,6 +3,7 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2017 The PIVX developers
 // Copyright (c) 2017-2018 The Northern developers
+// Copyright (c) 2018 The CTSC developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -46,7 +47,7 @@ using namespace boost;
 using namespace std;
 
 #if defined(NDEBUG)
-#error "Northern cannot be compiled without assertions."
+#error "CTSC cannot be compiled without assertions."
 #endif
 
 // 6 comes from OPCODE (1) + vch.size() (1) + BIGNUM size (4)
@@ -80,7 +81,7 @@ bool fAlerts = DEFAULT_ALERTS;
 unsigned int nStakeMinAge = 60 * 60;
 int64_t nReserveBalance = 0;
 
-/** Fees smaller than this (in unort) are considered zero fee (for relaying and mining)
+/** Fees smaller than this (in ucts) are considered zero fee (for relaying and mining)
  * We are ~100 times smaller then bitcoin now (2015-06-23), set minRelayTxFee only 10 times higher
  * so it's still 10 times lower comparing to bitcoin.
  */
@@ -1614,31 +1615,30 @@ double ConvertBitsToDouble(unsigned int nBits)
     return dDiff;
 }
 
+// NOTE: +1 is added to the height somewhere else, so treat as zero-based here
 int64_t GetBlockValue(int nHeight)
 {
     int64_t nSubsidy = 0;
 
-    if (Params().NetworkID() == CBaseChainParams::TESTNET) {
-        if (nHeight < Params().LAST_POW_BLOCK() && nHeight > 0)
-            return 50000 * COIN;
-    }
-
-    if (nHeight < Params().LAST_POW_BLOCK())
-        nSubsidy = 10000 * COIN;
-    else if (nHeight <= 30000)
-        nSubsidy = 5 * COIN;
-    else if (nHeight > 30000 && nHeight <= 200000)
-        nSubsidy = 3.75 * COIN;
-    else if (nHeight > 200000 && nHeight <= 500000)
-        nSubsidy = 2.5 * COIN;
-    else if (nHeight > 500000 && nHeight <= 900000)
-        nSubsidy = 1.25 * COIN;
-    else if (nHeight > 900000 && nHeight <= 1500000)
-        nSubsidy = 0.5 * COIN;
-    else if (nHeight > 1500000 && nHeight <= 6000000)
-        nSubsidy = 0.25 * COIN;
+    // CTSC: MAINNET/TESTNET REWARDS
+    if (nHeight < 200)
+        nSubsidy = 100000 * COIN;
+    else if (nHeight <= Params().LAST_POW_BLOCK()) // allow for premine confirmations
+        nSubsidy = 1 * COIN;
+    else if (nHeight > Params().LAST_POW_BLOCK() && nHeight <= 5000)
+        nSubsidy = 1 * COIN;
+    else if (nHeight > 5000 && nHeight <= 10000)
+        nSubsidy = 1 * COIN;
+    else if (nHeight > 10000 && nHeight <= 25000)
+        nSubsidy = 50 * COIN;
+    else if (nHeight > 25000 && nHeight <= 250000)
+        nSubsidy = 40 * COIN;
+    else if (nHeight > 250000 && nHeight <= 500000)
+        nSubsidy = 50 * COIN;
+    else if (nHeight > 500000 && nHeight <= 1000000)
+        nSubsidy = 60 * COIN;
     else
-        nSubsidy = 0.125 * COIN;
+        nSubsidy = 1 * COIN; // OPTIONAL: Halving can take over from here when NOT 0
 
     // Check if we reached the coin max supply.
     int64_t nMoneySupply = chainActive.Tip()->nMoneySupply;
@@ -1657,11 +1657,19 @@ int64_t GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCou
     int64_t ret = 0;
 
     // No rewards till masternode activation.
-    if (nHeight < Params().LAST_POW_BLOCK() || blockValue == 0)
+    if (nHeight <= Params().LAST_POW_BLOCK() || blockValue == 0)
         return 0;
 
-    // Check if we reached coin supply
-    ret = blockValue * 0.85; // 85% of block reward
+    if (nHeight <= 25000)
+        ret = blockValue * 0.75; // 75% of block reward
+    else if (nHeight > 25000 && nHeight <= 250000)
+        ret = blockValue * 0.80; // 80% of block reward
+    else if (nHeight > 250000 && nHeight <= 500000)
+        ret = blockValue * 0.85; // 85% of block reward
+    else if (nHeight > 500000 && nHeight <= 1000000)
+        ret = blockValue * 0.90; // 90% of block reward
+    else
+        ret = blockValue * 0.90; // 90% of block reward
 
     return ret;
 }
@@ -2051,7 +2059,7 @@ static CCheckQueue<CScriptCheck> scriptcheckqueue(128);
 
 void ThreadScriptCheck()
 {
-    RenameThread("northern-scriptch");
+    RenameThread("ctsc-scriptch");
     scriptcheckqueue.Thread();
 }
 
@@ -3147,7 +3155,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, bool fCheckPOW, bo
                 nHeight = (*mi).second->nHeight + 1;
         }
 
-        // NORT
+        // CTSC
         // It is entierly possible that we don't have enough data and this could fail
         // (i.e. the block could indeed be valid). Store the block for later consideration
         // but issue an initial reject message.
@@ -4580,12 +4588,9 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv, 
             return false;
         }
 
-        // NORT: We use certain sporks during IBD, so check to see if they are
-        // available. If not, ask the first peer connected for them.
-        bool fMissingSporks = !pSporkDB->SporkExists(SPORK_14_NEW_PROTOCOL_ENFORCEMENT) &&
-                !pSporkDB->SporkExists(SPORK_15_NEW_PROTOCOL_ENFORCEMENT_2);
-
-        if (fMissingSporks || !fRequestedSporksIDB){
+        // CTSC: Ignore missing sporks, sporking not used for now
+        bool fMissingSporks = false; // !pSporkDB->SporkExists(SPORK_14_NEW_PROTOCOL_ENFORCEMENT) && !pSporkDB->SporkExists(SPORK_15_NEW_PROTOCOL_ENFORCEMENT_2);
+        if (fMissingSporks && !fRequestedSporksIDB){
             LogPrintf("asking peer for sporks\n");
             pfrom->PushMessage("getsporks");
             fRequestedSporksIDB = true;

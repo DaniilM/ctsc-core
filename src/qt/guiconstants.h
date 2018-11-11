@@ -13,7 +13,7 @@ static const int MODEL_UPDATE_DELAY = 250;
 /* AskPassphraseDialog -- Maximum passphrase length */
 static const int MAX_PASSPHRASE_SIZE = 1024;
 
-/* Northern GUI -- Size of icons in status bar */
+/* CTSC GUI -- Size of icons in status bar */
 static const int STATUSBAR_ICONSIZE = 16;
 
 static const bool DEFAULT_SPLASHSCREEN = true;
@@ -22,7 +22,9 @@ static const bool DEFAULT_SPLASHSCREEN = true;
 #define STYLE_INVALID "background:#FF8080"
 
 /* Transaction list -- unconfirmed transaction */
-#define COLOR_UNCONFIRMED QColor(255, 170, 15)
+// CTSC: Changed styling
+//#define COLOR_UNCONFIRMED QColor(255, 170, 15)
+#define COLOR_UNCONFIRMED QColor(93, 93, 93)
 /* Transaction list -- negative amount */
 #define COLOR_NEGATIVE QColor(255, 0, 0)
 /* Transaction list -- bare address (without label) */
@@ -50,9 +52,9 @@ static const int MAX_URI_LENGTH = 255;
 /* Number of frames in spinner animation */
 #define SPINNER_FRAMES 35
 
-#define QAPP_ORG_NAME "Northern"
-#define QAPP_ORG_DOMAIN "savebitcoin.io"
-#define QAPP_APP_NAME_DEFAULT "Northern-Qt"
-#define QAPP_APP_NAME_TESTNET "Northern-Qt-testnet"
+#define QAPP_ORG_NAME "CTSC"
+#define QAPP_ORG_DOMAIN "ctscoin.net"
+#define QAPP_APP_NAME_DEFAULT "CTSC-Qt"
+#define QAPP_APP_NAME_TESTNET "CTSC-Qt-testnet"
 
 #endif // BITCOIN_QT_GUICONSTANTS_H

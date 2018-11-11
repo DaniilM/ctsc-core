@@ -32,9 +32,41 @@
          <number>0</number>
         </property>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_Header" stretch="1,0">
+         <layout class="QHBoxLayout" name="horizontalLayout_Header" stretch="1,0,1">
+         <property name="spacing">
+           <number>6</number>
+          </property>
           <item>
-           <spacer name="horizontalSpacer_3">
+           <widget class="QLabel" name="labelOverviewHeaderLeft">
+            <property name="minimumSize">
+             <size>
+              <width>464</width>
+              <height>60</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>60</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>RECEIVE</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_Header">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -130,7 +162,7 @@
              <item row="6" column="0">
               <widget class="QLabel" name="label_3">
                <property name="toolTip">
-                <string>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Northern network.</string>
+                <string>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the CTSC network.</string>
                </property>
                <property name="text">
                 <string>&amp;Message:</string>
@@ -153,7 +185,7 @@
              <item row="6" column="2">
               <widget class="QLineEdit" name="reqMessage">
                <property name="toolTip">
-                <string>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the Northern network.</string>
+                <string>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the CTSC network.</string>
                </property>
               </widget>
              </item>
@@ -230,7 +262,7 @@
                   <string>&amp;Request payment</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../northern.qrc">
+                  <iconset resource="../ctsc.qrc">
                    <normaloff>:/icons/receiving_addresses</normaloff>:/icons/receiving_addresses</iconset>
                  </property>
                 </widget>
@@ -250,7 +282,7 @@
                   <string>Clear</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../northern.qrc">
+                  <iconset resource="../ctsc.qrc">
                    <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
                  </property>
                  <property name="autoDefault">
@@ -315,7 +347,7 @@
               </font>
              </property>
              <property name="text">
-              <string>Requested payments history</string>
+              <string>Requested Payments History</string>
              </property>
             </widget>
            </item>
@@ -383,7 +415,7 @@
                 <string>Show</string>
                </property>
                <property name="icon">
-                <iconset resource="../northern.qrc">
+                <iconset resource="../ctsc.qrc">
                  <normaloff>:/icons/edit</normaloff>:/icons/edit</iconset>
                </property>
                <property name="autoDefault">
@@ -403,7 +435,7 @@
                 <string>Remove</string>
                </property>
                <property name="icon">
-                <iconset resource="../northern.qrc">
+                <iconset resource="../ctsc.qrc">
                  <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
                </property>
                <property name="autoDefault">
@@ -456,7 +488,7 @@
   <tabstop>removeRequestButton</tabstop>
  </tabstops>
  <resources>
-  <include location="../northern.qrc"/>
+  <include location="../ctsc.qrc"/>
  </resources>
  <connections/>
 </ui>

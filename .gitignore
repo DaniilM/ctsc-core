@@ -1,18 +1,19 @@
+.gitignore
+.vscode/
 *.sublime-project
 *.sublime-workspace
-.vscode
 todo.txt
 reset-files.bash
 
 *.tar.gz
 
 *.exe
-src/northern
-src/northernd
-src/northern-cli
-src/northern-tx
-src/test/test_northern
-src/qt/test/test_northern-qt
+src/ctsc
+src/ctscd
+src/ctsc-cli
+src/ctsc-tx
+src/test/test_ctsc
+src/qt/test/test_ctsc-qt
 
 # autoreconf
 Makefile.in
@@ -34,20 +35,22 @@ build-aux/test-driver
 config.log
 config.status
 configure
-confdefs.h
-conftest.cpp
-conftest.err
 libtool
-src/config/northern-config.h
-src/config/northern-config.h.in
+src/config/ctsc-config.h
+src/config/ctsc-config.h.in
 src/config/stamp-h1
 share/setup.nsi
 share/qt/Info.plist
 contrib/devtools/split-debug.sh
 
+src/univalue/gen
+
 src/qt/*.moc
 src/qt/moc_*.cpp
 src/qt/forms/ui_*.h
+
+src/qt/ctsc-qt.creator
+src/qt/ctsc-qt.creator.user
 
 src/qt/test/moc*.cpp
 
@@ -62,7 +65,8 @@ src/qt/test/moc*.cpp
 *.pyc
 *.o
 *.o-*
-.northern
+*.patch
+.ctsc
 *.a
 *.pb.cc
 *.pb.h
@@ -77,16 +81,20 @@ src/qt/test/moc*.cpp
 #libtool object files
 *.lo
 *.la
+*.o
+*.a
 
 # Compilation and Qt preprocessor part
 *.qm
 Makefile
-northern-qt
-Northern-Qt.app
+ctsc-qt
+CTSC-Qt.app
+.!*
+/dist
 
 # Unit-tests
 Makefile.test
-northern-qt_test
+ctsc-qt_test
 src/test/buildenv.py
 
 # Resources cpp
@@ -102,7 +110,7 @@ build
 #lcov
 *.gcno
 /*.info
-test_northern.coverage/
+test_ctsc.coverage/
 total.coverage/
 coverage_percent.txt
 
@@ -114,12 +122,14 @@ qa/pull-tester/run-bitcoind-for-test.sh
 qa/pull-tester/tests-config.sh
 qa/pull-tester/cache/*
 qa/pull-tester/test.*/*
+src/test/*.*
+src/univalue/test/*.*
+
+!src/leveldb*/Makefile
 
 .cproject
 .project
 /doc/doxygen/
 /nbproject/
-
-.idea
-CMakeLists.txt
-cmake-build-debug
+CTSC-Qt.app/Contents/MacOS/CTSC-Qt
+dist/CTSC-Qt.app/Contents/MacOS/CTSC-Qt

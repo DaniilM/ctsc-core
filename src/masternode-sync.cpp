@@ -288,6 +288,8 @@ void CMasternodeSync::Process()
             pnode->FulfilledRequest("getspork");
 
             pnode->PushMessage("getsporks"); //get current network sporks
+            LogPrintf("CTSC: get current network sporks\n");
+            
             if (RequestedMasternodeAttempt >= 2) GetNextAsset();
             RequestedMasternodeAttempt++;
 
